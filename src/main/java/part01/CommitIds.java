@@ -1,6 +1,8 @@
 package part01;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.stream.Stream;
 
 public class CommitIds {
 
@@ -38,6 +40,14 @@ public class CommitIds {
          * Note also, that if the given commitLog is empty, you must return an empty
          * collection.
          */
-        return null;
+        Collection<String> ids = new HashSet<>();
+        String[] lines = commitLog.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("Commit")) {
+                String[] id = line.split(" ");
+                ids.add(id[1]);
+            }
+        }
+        return ids;
     }
 }
