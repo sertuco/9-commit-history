@@ -2,7 +2,6 @@ package part01;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.stream.Stream;
 
 public class CommitIds {
 
@@ -44,8 +43,8 @@ public class CommitIds {
         String[] lines = commitLog.split("\n");
         for (String line : lines) {
             if (line.startsWith("Commit")) {
-                String[] id = line.split(" ");
-                ids.add(id[1]);
+                String[] section = line.split(" ");
+                ids.add(section[1]);
             }
         }
         return ids;

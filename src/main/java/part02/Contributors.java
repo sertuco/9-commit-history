@@ -1,6 +1,8 @@
 package part02;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Contributors {
@@ -24,7 +26,15 @@ public class Contributors {
     public Collection<String> getContributors(String commitLog) {
         // Like in the previous exercise, you need to return an instance of some class
         // that implements the Collection interface. The choice is yours.
-        return null;
+        Collection<String> contributors = new HashSet<>();
+        String[] lines = commitLog.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("Commit")) {
+                String[] section = line.split(" ");
+                contributors.add(section[3]);
+            }
+        }
+        return contributors;
     }
 
     /**
@@ -48,6 +58,20 @@ public class Contributors {
      * @return a map containing the commit ids grouped by contributor
      */
     public Map<String, Collection<String>> groupCommitIdsByContributors(String commitLog) {
-        return null;
+        Map<String, Collection<String>> map = new HashMap<>();
+
+        String[] lines = commitLog.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("Commit")) {
+                String[] section = line.split(" ");
+                String id = section[1];
+                String contributor = section[3];
+                if (!map.containsKey(contributor)) {
+                    map.put(contributor, new HashSet<>());
+                }
+                map.get(contributor).add(id);
+            }
+        }
+        return map;
     }
 }
