@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 public class Main {
 
@@ -18,5 +19,21 @@ public class Main {
         // following line:
 
         // System.out.println(fileContents);
+        HashMap<String, String> commitMap = new HashMap<>();
+        HashMap<String, String> idMap = new HashMap<>();
+
+        for (String commit : fileContents.split("\n\n")) {
+            String lines = commit.split("\n")[0];
+            String[] sections = lines.split(" ");
+            String id = sections[1];
+            String parent = sections[5].replace(")", "");
+            commitMap.put(id, commit);
+            idMap.put(parent, id);
+        }
+        String currentId = idMap.get("None");
+        while (currentId != null) {
+            System.out.println(commitMap.get(currentId) + "\n");
+            currentId = idMap.get(currentId);
+        }
     }
 }
